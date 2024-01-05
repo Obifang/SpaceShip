@@ -26,6 +26,7 @@ public class ShipMovement : MonoBehaviour
     private InputAction _rotate;
     private InputAction _move;
     private InputAction _look;
+    private InputAction _roll;
 
     private void Awake()
     {
@@ -40,18 +41,21 @@ public class ShipMovement : MonoBehaviour
         //Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked;
     }
-
     private void Update()
     {
-        _thrustDirection = _move.ReadValue<Vector3>();
-        _rotateDirection = _rotate.ReadValue<float>();
+        _thrustDirection = _move.ReadValue<Vector3>().normalized;
+        if (_roll.IsPressed()) {
+            _rotateDirection = _rotate.ReadValue<float>();
+        } else {
+            _rotateDirection = 0;
+        }
         _lookDirection = _look.ReadValue<Vector2>();
 
         if (FrontLeftLandingGear.Grounded && FrontRightLandingGear.Grounded && BackLeftLandingGear.Grounded && BackRightLandingGear.Grounded) {
             return;
         }
 
-        var mouseAxis = new Vector3(-_lookDirection.y, _lookDirection.x, _rotateDirection * ForwardRotationSpeed) * RotationSpeed * Time.deltaTime;
+        var mouseAxis = new Vector3(-_lookDirection.y, _lookDirection.x, _rotateDirection) * RotationSpeed * Time.deltaTime;
         transform.Rotate(mouseAxis);
     }
 
@@ -110,9 +114,11 @@ public class ShipMovement : MonoBehaviour
         _rotate = PlayerControls.Player.Rotate;
         _move = PlayerControls.Player.Move;
         _look = PlayerControls.Player.Look;
+        _roll = PlayerControls.Player.EnableRoll;
         _move.Enable();
         _rotate.Enable();
         _look.Enable();
+        _roll.Enable();
     }
 
     private void OnDisable()
@@ -120,5 +126,6 @@ public class ShipMovement : MonoBehaviour
         _move.Disable();
         _rotate.Disable();
         _look.Disable();
+        _roll.Disable();
     }
 }

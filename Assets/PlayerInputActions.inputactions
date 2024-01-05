@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "EnableRoll",
+                    "type": "Button",
+                    "id": "5c946423-e287-4271-8b34-f630b845a231",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -343,7 +352,7 @@
                 {
                     "name": "negative",
                     "id": "af054315-9d93-4025-9b3f-b1e7450c9bc8",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -354,13 +363,24 @@
                 {
                     "name": "positive",
                     "id": "1daf0669-973f-496e-8927-0dd9425ca8b6",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/rightStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "b29e3b86-3e30-4dd7-8272-80ba1194f654",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "EnableRoll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
