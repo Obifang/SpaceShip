@@ -15,6 +15,7 @@ public class ShipMovement : MonoBehaviour
     public GroundCheck FrontRightLandingGear;
     public GroundCheck BackLeftLandingGear;
     public GroundCheck BackRightLandingGear;
+    public ThrusterUI ThrusterUI;
 
     private Rigidbody _rb;
     private Collider _collider;
@@ -38,12 +39,14 @@ public class ShipMovement : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
+
         //Cursor.visible = false;
         //Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {
         _thrustDirection = _move.ReadValue<Vector3>().normalized;
+        ThrusterUI.UpdateUIValues(_thrustDirection);
         if (_roll.IsPressed()) {
             _rotateDirection = _rotate.ReadValue<float>();
         } else {
@@ -62,33 +65,7 @@ public class ShipMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        
-        /*if (Input.GetKey(KeyCode.Space)) {
-            forceToAdd += transform.up * BaseThrustSpeed;
-        }
-
-        if (Input.GetKey(KeyCode.D)) {
-            forceToAdd += transform.right * BaseThrustSpeed;
-        }
-
-        if (Input.GetKey(KeyCode.A)) {
-            forceToAdd += -transform.right * BaseThrustSpeed;
-        }
-
-        if (Input.GetKey(KeyCode.W)) {
-            forceToAdd += transform.forward * BaseThrustSpeed;
-        }
-
-        if (Input.GetKey(KeyCode.S)) {
-            forceToAdd += -transform.forward * BaseThrustSpeed;
-        }*/
-
         _rb.AddRelativeForce(_thrustDirection * BaseThrustSpeed);
-    }
-
-    public void FireThruster(InputAction.CallbackContext context)
-    {
-
     }
 
     public void CheckGrounded()
@@ -115,6 +92,7 @@ public class ShipMovement : MonoBehaviour
         _move = PlayerControls.Player.Move;
         _look = PlayerControls.Player.Look;
         _roll = PlayerControls.Player.EnableRoll;
+
         _move.Enable();
         _rotate.Enable();
         _look.Enable();
