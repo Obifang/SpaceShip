@@ -30,8 +30,8 @@ public class PerObjectGravity : MonoBehaviour
         var forceTransform = constantForce.transform;
         //forceTransform.rotation = Quaternion.FromToRotation(forceTransform.up, relativeDirection) * forceTransform.rotation;
         var goalRotation = Quaternion.FromToRotation(-forceTransform.up, relativeDirection) * forceTransform.rotation;
-        //forceTransform.rotation = Quaternion.Slerp(forceTransform.rotation, Quaternion.RotateTowards(forceTransform.rotation, goalRotation, StabaliseValue * Time.fixedDeltaTime), StabaliseValue);
-        forceTransform.rotation = Quaternion.Slerp(forceTransform.rotation, goalRotation, StabaliseValue * Time.fixedDeltaTime);
+        forceTransform.rotation = Quaternion.Slerp(forceTransform.rotation, Quaternion.RotateTowards(forceTransform.rotation, goalRotation, StabaliseValue * Time.fixedDeltaTime), StabaliseValue);
+        //forceTransform.rotation = Quaternion.Slerp(forceTransform.rotation, goalRotation, StabaliseValue * Time.fixedDeltaTime);
         constantForce.force = relativeDirection * _shipRB.mass * ObjectGravity;
     }
 
