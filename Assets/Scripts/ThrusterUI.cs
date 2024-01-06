@@ -53,7 +53,6 @@ public class ThrusterUI : MonoBehaviour
         var y = axisOfValues.y;
         var z = axisOfValues.z;
         var axisValues = new float[] { x, y, z };
-        Debug.Log(axisValues[0]);
 
         if (_positiveAxisValues == axisValues) {
             _valuesUpdated = false;

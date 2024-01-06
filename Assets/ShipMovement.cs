@@ -16,6 +16,7 @@ public class ShipMovement : MonoBehaviour
     public GroundCheck BackLeftLandingGear;
     public GroundCheck BackRightLandingGear;
     public ThrusterUI ThrusterUI;
+    public AudioSource ThrusterAudioSource;
 
     private Rigidbody _rb;
     private Collider _collider;
@@ -28,10 +29,13 @@ public class ShipMovement : MonoBehaviour
     private InputAction _move;
     private InputAction _look;
     private InputAction _roll;
+    private AudioPlayer _player;
 
     private void Awake()
     {
         PlayerControls = new PlayerInputActions();
+        ThrusterAudioSource = GetComponent<AudioSource>();
+        _player = GetComponent<AudioPlayer>();
     }
 
     // Start is called before the first frame update
@@ -56,6 +60,12 @@ public class ShipMovement : MonoBehaviour
 
         if (FrontLeftLandingGear.Grounded && FrontRightLandingGear.Grounded && BackLeftLandingGear.Grounded && BackRightLandingGear.Grounded) {
             return;
+        }
+
+        if (_thrustDirection != Vector3.zero) {
+            _player.Play(ThrusterAudioSource);
+        } else if (_thrustDirection == Vector3.zero) {
+            _player.FadeAudioToStop(1f,ThrusterAudioSource);
         }
 
         var mouseAxis = new Vector3(-_lookDirection.y, _lookDirection.x, _rotateDirection) * RotationSpeed * Time.deltaTime;

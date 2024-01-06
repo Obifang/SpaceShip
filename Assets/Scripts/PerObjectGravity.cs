@@ -34,4 +34,6 @@ public class PerObjectGravity : MonoBehaviour
         forceTransform.rotation = Quaternion.Slerp(forceTransform.rotation, goalRotation, StabaliseValue * Time.fixedDeltaTime);
         constantForce.force = relativeDirection * _shipRB.mass * ObjectGravity;
     }
+
+
 }
