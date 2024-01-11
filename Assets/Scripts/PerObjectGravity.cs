@@ -6,22 +6,22 @@ public class PerObjectGravity : MonoBehaviour
 {
     public float ObjectGravity = 9.8f;
     public float StabaliseValue;
+    public bool EnableShipGravityScale = false;
     private ConstantForce _ship;
     private Rigidbody _shipRB;
-    private Vector3 ColliderMax;
-    // Start is called before the first frame update
+    // private is called before the first frame update
     void Start()
     {
         _ship = FindAnyObjectByType<ShipMovement>().GetComponent<ConstantForce>();
         _shipRB = _ship.GetComponent<Rigidbody>();
-        ColliderMax = GetComponent<Collider>().bounds.max;
-        ApplyGravityScaleToObject(_ship);
+        _shipRB.velocity = new Vector3(-0.001f, 0, 0);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        ApplyGravityScaleToObject(_ship);
+        if (EnableShipGravityScale) 
+            ApplyGravityScaleToObject(_ship);
     }
 
     public void ApplyGravityScaleToObject(ConstantForce constantForce)
@@ -34,6 +34,4 @@ public class PerObjectGravity : MonoBehaviour
         //forceTransform.rotation = Quaternion.Slerp(forceTransform.rotation, goalRotation, StabaliseValue * Time.fixedDeltaTime);
         constantForce.force = relativeDirection * _shipRB.mass * ObjectGravity;
     }
-
-
 }
